@@ -25,7 +25,7 @@ public class UserController {
         @Valid @RequestBody SignupRequestDTO requestDTO
     ) {
         UserResponseDTO responseDTO = userService.signup(
-            requestDTO.nickname(),
+            requestDTO.username(),
             requestDTO.password());
 
         return ResponseEntity.status(HttpStatus.OK)

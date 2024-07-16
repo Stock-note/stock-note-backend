@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ResponseDTO<String>> handleNicknameExistException(
-        NicknameExistException ex
+    public ResponseEntity<ResponseDTO<String>> handleExistUsernameException(
+        ExistUsernameException ex
     ) {
         return ResponseEntity.badRequest()
             .body(

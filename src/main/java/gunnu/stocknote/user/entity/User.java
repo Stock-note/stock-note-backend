@@ -9,13 +9,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "users")
@@ -26,10 +30,10 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
-    @Column(name = "nickname")
-    private String nickname;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -41,8 +45,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public User(String nickname, String password, UserRole userRole) {
-        this.nickname = nickname;
+    public User(String username, String password, UserRole userRole) {
+        this.username = username;
         this.password = password;
         this.userRole = userRole;
     }

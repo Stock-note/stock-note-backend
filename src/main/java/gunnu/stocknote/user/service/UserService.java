@@ -1,6 +1,6 @@
 package gunnu.stocknote.user.service;
 
-import gunnu.stocknote.exception.user.NicknameExistException;
+import gunnu.stocknote.exception.user.ExistUsernameException;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;
 import gunnu.stocknote.user.entity.User;
 import gunnu.stocknote.user.entity.UserRole;
@@ -18,21 +18,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponseDTO signup(final String nickname, final String password) {
-        checkNicknameExists(nickname);
+    public UserResponseDTO signup(final String username, final String password) {
+        checkUsernameExists(username);
         String encodedPassword = passwordEncoder.encode(password);
 
         User savedUser = userRepository.save(new User(
-            nickname,
+            username,
             encodedPassword,
             USER_ROLE));
 
         return UserResponseDTO.from(savedUser);
     }
 
-    private void checkNicknameExists(final String nickname) {
-        userRepository.findByNickname(nickname).ifPresent(user -> {
-            throw new NicknameExistException();
+    private void checkUsernameExists(final String username) {
+        userRepository.findByUsername(username).ifPresent(user -> {
+            throw new ExistUsernameException();
         });
     }
 }
