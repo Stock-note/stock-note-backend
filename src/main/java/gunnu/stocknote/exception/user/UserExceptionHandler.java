@@ -18,7 +18,19 @@ public class UserExceptionHandler {
                 ResponseDTO.<String>builder()
                     .statusCode(HttpStatus.CONFLICT.value())
                     .message(ex.getMessage())
-                    .data(null)
+                    .build()
+            );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ResponseDTO<String>> handleNotMatchPasswordException(
+        NotMatchPasswordException ex
+    ) {
+        return ResponseEntity.badRequest()
+            .body(
+                ResponseDTO.<String>builder()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .message(ex.getMessage())
                     .build()
             );
     }
