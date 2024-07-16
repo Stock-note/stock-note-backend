@@ -1,6 +1,7 @@
 package gunnu.stocknote.user.controller;
 
 import gunnu.stocknote.common.dto.ResponseDTO;
+import gunnu.stocknote.common.jwt.TokenProvider;
 import gunnu.stocknote.user.dto.request.LoginRequestDTO;
 import gunnu.stocknote.user.dto.request.SignupRequestDTO;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-
-    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final UserService userService;
 
@@ -46,7 +45,7 @@ public class UserController {
         @Valid @RequestBody LoginRequestDTO requestDTO
     ) {
         String token = userService.login(requestDTO.username(), requestDTO.password());
-        servletResponse.addHeader(AUTHORIZATION_HEADER, token);
+        servletResponse.addHeader(TokenProvider.AUTHORIZATION_HEADER, token);
         return ResponseEntity.status(HttpStatus.OK)
             .body(ResponseDTO.<Void>builder()
                 .statusCode(HttpStatus.OK.value())

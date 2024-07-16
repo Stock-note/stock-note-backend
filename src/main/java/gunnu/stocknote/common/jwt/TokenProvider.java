@@ -1,4 +1,4 @@
-package gunnu.stocknote.common;
+package gunnu.stocknote.common.jwt;
 
 import gunnu.stocknote.user.entity.UserRole;
 import io.jsonwebtoken.Claims;
@@ -19,16 +19,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenProvider {
 
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
     private static final String USER_ID = "userId";
-    public static final String AUTHORIZATION_KEY = "auth";
+    private static final String AUTHORIZATION_KEY = "auth";
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     @Value("${jwt.secret}")
     private String secret;
 
     @Value("${jwt.token-validity-in-milliseconds}")
-    private long accessTokenValidityInMs;
+    private Long accessTokenValidityInMs;
 
     private Key key;
 
@@ -49,8 +50,8 @@ public class TokenProvider {
                 .setSubject(username)
                 .claim(USER_ID, userId)
                 .claim(AUTHORIZATION_KEY, userRole)
-                .setExpiration(new Date(date.getTime() + accessTokenValidityInMs))
                 .setIssuedAt(date)
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidityInMs))
                 .signWith(key, signatureAlgorithm)
                 .compact();
     }

@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import gunnu.stocknote.common.TokenProvider;
+import gunnu.stocknote.common.jwt.TokenProvider;
 import gunnu.stocknote.exception.user.ExistUsernameException;
 import gunnu.stocknote.exception.user.NotMatchPasswordException;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;

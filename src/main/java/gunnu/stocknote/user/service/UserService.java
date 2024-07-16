@@ -1,6 +1,6 @@
 package gunnu.stocknote.user.service;
 
-import gunnu.stocknote.common.TokenProvider;
+import gunnu.stocknote.common.jwt.TokenProvider;
 import gunnu.stocknote.exception.user.ExistUsernameException;
 import gunnu.stocknote.exception.user.NotMatchPasswordException;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;
@@ -35,7 +35,7 @@ public class UserService {
 
     public String login(final String username, final String password) {
         User user = userRepository.findByUsername(username)
-            .filter(u -> u.getPassword().equals(passwordEncoder.encode(password)))
+            .filter(u -> !passwordEncoder.matches(u.getPassword(), password))
             .orElseThrow(NotMatchPasswordException::new);
 
         return tokenProvider.createAccessToken(
