@@ -1,0 +1,25 @@
+package gunnu.stocknote.exception.user;
+
+import gunnu.stocknote.common.dto.ResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class UserExceptionHandler {
+
+    @ExceptionHandler
+    public ResponseEntity<ResponseDTO<String>> handleNicknameExistException(
+        NicknameExistException ex
+    ) {
+        return ResponseEntity.badRequest()
+            .body(
+                ResponseDTO.<String>builder()
+                    .statusCode(HttpStatus.CONFLICT.value())
+                    .message(ex.getMessage())
+                    .data(null)
+                    .build()
+            );
+    }
+}
