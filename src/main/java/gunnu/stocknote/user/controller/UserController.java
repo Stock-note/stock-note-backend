@@ -1,9 +1,12 @@
 package gunnu.stocknote.user.controller;
 
 import gunnu.stocknote.common.dto.ResponseDTO;
+import gunnu.stocknote.common.jwt.TokenProvider;
+import gunnu.stocknote.user.dto.request.LoginRequestDTO;
 import gunnu.stocknote.user.dto.request.SignupRequestDTO;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;
 import gunnu.stocknote.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,20 @@ public class UserController {
                 .statusCode(HttpStatus.OK.value())
                 .message("회원가입 성공")
                 .data(responseDTO)
+                .build());
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDTO<Void>> login(
+        HttpServletResponse servletResponse,
+        @Valid @RequestBody LoginRequestDTO requestDTO
+    ) {
+        String token = userService.login(requestDTO.username(), requestDTO.password());
+        servletResponse.addHeader(TokenProvider.AUTHORIZATION_HEADER, token);
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(ResponseDTO.<Void>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("로그인 성공")
                 .build());
     }
 }
