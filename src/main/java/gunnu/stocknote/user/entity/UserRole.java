@@ -1,5 +1,8 @@
 package gunnu.stocknote.user.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
 
     USER("ROLE_USER"),
@@ -9,9 +12,5 @@ public enum UserRole {
 
     UserRole(String authority) {
         this.authority = authority;
-    }
-
-    public String getAuthority() {
-        return this.authority;
     }
 }

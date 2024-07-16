@@ -1,5 +1,4 @@
-package gunnu.stocknote.user.entity;
-
+package gunnu.stocknote.stock.entity;
 
 import gunnu.stocknote.common.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -23,32 +22,26 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "users")
+@Table(name = "stocks")
 @SQLRestriction("deleted_at is NULL")
-@SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE user_id = ?")
-public class User extends BaseEntity {
+@SQLDelete(sql = "UPDATE stocks SET deleted_at = NOW() WHERE stock_id = ?")
+public class Stock extends BaseEntity {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "stock_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long stockId;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "code")
+    private Long code;
 
-    @Column(name = "profile")
-    private String profile;
-
-    @Column(name = "user_role")
+    @Column(name = "market")
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private Market market;
 
-    public User(String username, String password, UserRole userRole) {
-        this.username = username;
-        this.password = password;
-        this.userRole = userRole;
-    }
+    @Column(name = "price")
+    private Long price;
 }
