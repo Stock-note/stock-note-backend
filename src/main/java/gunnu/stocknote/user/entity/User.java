@@ -1,6 +1,7 @@
 package gunnu.stocknote.user.entity;
 
 
+import gunnu.stocknote.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,7 +26,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "users")
 @SQLRestriction("deleted_at is NULL")
 @SQLDelete(sql = "UPDATE artists SET deleted_at = NOW() WHERE user_id = ?")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @Column(name = "user_id")
