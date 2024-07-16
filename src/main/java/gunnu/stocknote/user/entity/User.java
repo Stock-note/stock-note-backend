@@ -9,8 +9,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+
+@Getter
+@NoArgsConstructor
 
 @Entity
 @Table(name = "users")
@@ -35,4 +40,10 @@ public class User {
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    public User(String nickname, String password, UserRole userRole) {
+        this.nickname = nickname;
+        this.password = password;
+        this.userRole = userRole;
+    }
 }
