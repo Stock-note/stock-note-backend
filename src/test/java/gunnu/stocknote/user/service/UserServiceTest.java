@@ -3,10 +3,13 @@ package gunnu.stocknote.user.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import gunnu.stocknote.common.TokenProvider;
 import gunnu.stocknote.exception.user.ExistUsernameException;
+import gunnu.stocknote.exception.user.NotMatchPasswordException;
 import gunnu.stocknote.user.dto.response.UserResponseDTO;
 import gunnu.stocknote.user.entity.User;
 import gunnu.stocknote.user.entity.UserRole;
@@ -31,16 +34,21 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private TokenProvider tokenProvider;
+
+    @Mock
     private PasswordEncoder passwordEncoder;
 
     private final Long TEST_USER_ID = 1L;
     private final String TEST_USERNAME = "testUser";
     private final String TEST_PASSWORD = "testPassword";
+    private final String TEST_TOKEN = "testToken";
     private final UserRole TEST_USER_ROLE = UserRole.USER;
 
     private final User TEST_USER = User.builder()
         .userId(TEST_USER_ID)
         .username(TEST_USERNAME)
+        .password(TEST_PASSWORD)
         .userRole(TEST_USER_ROLE)
         .build();
 
@@ -79,6 +87,36 @@ class UserServiceTest {
             assertThrows(ExistUsernameException.class, () -> {
                 userService.signup(TEST_USERNAME, TEST_PASSWORD);
             });
+        }
+    }
+
+    @Nested
+    @DisplayName("로그인")
+    class Login {
+
+        @Test
+        @DisplayName("로그인성공")
+        void 로그인_성공() {
+            //given
+            when(passwordEncoder.encode(anyString())).thenReturn(TEST_PASSWORD);
+            when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(TEST_USER));
+            when(tokenProvider.createAccessToken(anyLong(), anyString(), any())).thenReturn(
+                TEST_TOKEN);
+
+            //when, then
+            assertThat(userService.login(TEST_USERNAME, TEST_PASSWORD)).isEqualTo(TEST_TOKEN);
+        }
+
+        @Test
+        @DisplayName("로그인실패")
+        void 로그인_실패() {
+            //given
+            when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+
+            //when, then
+            assertThrows(NotMatchPasswordException.class, () ->
+                userService.login(TEST_USERNAME, TEST_PASSWORD));
+
         }
     }
 }
