@@ -1,8 +1,10 @@
 package gunnu.stocknote.stock.repository;
 
 import gunnu.stocknote.stock.entity.Stock;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface StockRepository {
+@Mapper
+public interface StockMapperRepository {
 
     Stock findStockByName(final String name);
 }

@@ -6,7 +6,7 @@ import gunnu.stocknote.stock.entity.Stock;
 public record StockResponseDTO(
     Long stockId,
     String name,
-    Long code,
+    String code,
     Market market,
     Long price
 ) {

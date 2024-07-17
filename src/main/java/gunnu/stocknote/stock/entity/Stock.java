@@ -36,7 +36,7 @@ public class Stock extends BaseEntity {
     private String name;
 
     @Column(name = "code")
-    private Long code;
+    private String code;
 
     @Column(name = "market")
     @Enumerated(EnumType.STRING)
