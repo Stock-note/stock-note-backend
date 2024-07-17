@@ -73,12 +73,16 @@ public class TokenProvider {
         return false;
     }
 
+    public Long getUserIdFromToken(String token) {
+        return ((Integer) parseClaims(parseToken(token)).get(USER_ID)).longValue();
+    }
 
-    private Claims parseClaims(final String accessToken) {
+
+    private Claims parseClaims(final String token) {
         return Jwts.parserBuilder()
             .setSigningKey(key)
             .build()
-            .parseClaimsJws(parseToken(accessToken))
+            .parseClaimsJws(parseToken(token))
             .getBody();
     }
 
