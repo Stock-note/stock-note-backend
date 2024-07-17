@@ -1,8 +1,6 @@
-package gunnu.stocknote.common.config;
+package gunnu.stocknote.auth;
 
 import gunnu.stocknote.common.jwt.TokenProvider;
-import gunnu.stocknote.user.interceptor.LoginCheckInterceptor;
-import gunnu.stocknote.user.interceptor.TokenCheckInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,12 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
+        registry.addInterceptor(new LoginCheckInterceptor(tokenProvider))
             .order(1)
-            .addPathPatterns("/api/v1/users/test");
-
-        registry.addInterceptor(new TokenCheckInterceptor(tokenProvider))
-            .order(2)
-            .addPathPatterns("/api/v1/users/test");
+            .addPathPatterns("/api/v1/**");
     }
 }
