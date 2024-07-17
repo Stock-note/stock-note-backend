@@ -1,5 +1,6 @@
 package gunnu.stocknote.stocknote.controller;
 
+import gunnu.stocknote.auth.Auth;
 import gunnu.stocknote.common.dto.ResponseDTO;
 import gunnu.stocknote.stocknote.dto.request.CreateStocknoteRequestDTO;
 import gunnu.stocknote.stocknote.dto.response.StocknoteResponseDTO;
@@ -20,6 +21,7 @@ public class StocknoteController {
 
     private final StocknoteService stocknoteService;
 
+    @Auth
     @PostMapping
     public ResponseEntity<ResponseDTO<StocknoteResponseDTO>> createStocknote(
         @RequestBody CreateStocknoteRequestDTO requestDTO,

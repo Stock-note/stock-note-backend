@@ -4,5 +4,5 @@ import gunnu.stocknote.stocknote.entity.Stocknote;
 
 public interface StocknoteRepository {
 
-    Stocknote save(Stocknote stocknote);
+    Stocknote save(final Stocknote stocknote);
 }

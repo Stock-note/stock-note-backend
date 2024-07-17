@@ -11,7 +11,7 @@ public class StocknoteRepositoryImpl implements StocknoteRepository {
     private final StocknoteJpaRepository jpaRepository;
 
     @Override
-    public Stocknote save(Stocknote stocknote) {
+    public Stocknote save(final Stocknote stocknote) {
         return jpaRepository.save(stocknote);
     }
 }

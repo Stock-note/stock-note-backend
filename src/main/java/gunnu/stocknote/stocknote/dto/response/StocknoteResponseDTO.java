@@ -3,7 +3,6 @@ package gunnu.stocknote.stocknote.dto.response;
 import gunnu.stocknote.stocknote.entity.Stocknote;
 
 public record StocknoteResponseDTO(
-
     Long stocknoteId,
     String title,
     String contents,
@@ -13,7 +12,7 @@ public record StocknoteResponseDTO(
 
 ) {
 
-    public static StocknoteResponseDTO from(Stocknote stocknote) {
+    public static StocknoteResponseDTO from(final Stocknote stocknote) {
         return new StocknoteResponseDTO(
             stocknote.getStocknoteId(),
             stocknote.getTitle(),
