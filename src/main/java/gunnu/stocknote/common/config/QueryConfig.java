@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QueryConfig {
 
-    @PersistenceContext(unitName = "entityManager")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Bean
