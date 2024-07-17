@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--아래의 namespace에는 해당 파일이 어떤 Repository와 매핑되는지 명시해준다-->
+<mapper namespace="gunnu.stocknote.stock.repository.StockMapperRepository">
+
+  <!--id = "연결할 메서드의 이름" resultType = "결과로 반환할 타입(ex.dto, entity)" parameterType="파리미터 타입"-->
+  <select id="findStockByName" resultType="gunnu.stocknote.stock.entity.Stock"
+    parameterType="String">
+    select *
+    from stocks
+    where name = #{name};
+  </select>
+</mapper>
