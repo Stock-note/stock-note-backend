@@ -98,7 +98,6 @@ class UserServiceTest {
         @DisplayName("로그인성공")
         void 로그인_성공() {
             //given
-            when(passwordEncoder.encode(anyString())).thenReturn(TEST_PASSWORD);
             when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(TEST_USER));
             when(tokenProvider.createAccessToken(anyLong(), anyString(), any())).thenReturn(
                 TEST_TOKEN);
